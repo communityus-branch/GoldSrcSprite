@@ -14,10 +14,11 @@ A sprite file is composed of 3 sections.
 All values are little-endian.
 
 ### Header
+
 |Offset  |Size  |Type  |Description|Reference|
 |:------:|:----:|:----:|-----------|---------|
 |0       |4     |char  |File Identifier. Should always be 'IDSP'|
-|4       |4     |int   |Sprite file version. Should always be 0x02 |
+|4       |4     |int   |Sprite file version. Should always be 0x02|
 |8       |4     |int   |Sprite type|
 |12      |4     |int   |Texture format|       
 |16      |4     |float |Bounding radius|
@@ -29,6 +30,7 @@ All values are little-endian.
 
 ### Palette
 Starting offset: `40`
+
 |Offset|Size|Type|Description|Reference|
 |:----:|:--:|:--:|-----------|---------|
 |0     |2   |short|Size of palette. Should always be 256 however|size_of_palette|
