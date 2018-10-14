@@ -50,5 +50,4 @@ Number of frames sections: `Header.number_of_frames`
 |20    |... |byte|Array of image data. Each byte refers to a palette index. Total size: `Frame.frame_width * Frame.frame_height`|
 
 ## Credits
-Source: <http://yuraj.ucoz.com/half-life-formats.pdf>  
-Inspiration for 'Every Byte Explained': <https://tls.ulfheim.net/>
+Source: <http://yuraj.ucoz.com/half-life-formats.pdf>
