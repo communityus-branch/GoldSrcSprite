@@ -22,15 +22,16 @@ namespace GoldSrc.Sprite
         public GoldSrcSpriteSynchronization Synchronization { get; set; }
         public Color[] Palette { get; set; }
         public List<GoldSrcSpriteFrame> Frames { get; private set; } = new List<GoldSrcSpriteFrame>();
-        
+
         /// <summary>
         /// Gets the width of the largest frame in this sprite
         /// </summary>
-        public int MaxWidth {
+        public int MaxWidth
+        {
             get
             {
                 int maxWidth = 0;
-                foreach(var frame in Frames)
+                foreach (var frame in Frames)
                     if (frame.Width > maxWidth)
                         maxWidth = frame.Width;
                 return maxWidth;
@@ -45,7 +46,7 @@ namespace GoldSrc.Sprite
             get
             {
                 int maxHeight = 0;
-                foreach(var frame in Frames)
+                foreach (var frame in Frames)
                     if (frame.Height > maxHeight)
                         maxHeight = frame.Height;
                 return maxHeight;
@@ -101,7 +102,7 @@ namespace GoldSrc.Sprite
                     sprite.Palette[i] = Color.FromArgb(reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
 
                 // Frames
-                for(var i=0;i<numberOfFrames;i++)
+                for (var i = 0; i < numberOfFrames; i++)
                 {
                     var frame = new GoldSrcSpriteFrame(sprite);
 
@@ -159,7 +160,8 @@ namespace GoldSrc.Sprite
 
                 // Write palette
                 writer.Write((short)Palette.Length);
-                for (var i = 0; i < Palette.Length; i++) {
+                for (var i = 0; i < Palette.Length; i++)
+                {
                     var color = Palette[i];
                     writer.Write((byte)color.R);
                     writer.Write((byte)color.G);
@@ -167,7 +169,7 @@ namespace GoldSrc.Sprite
                 }
 
                 // Write frames
-                for(var i=0;i<Frames.Count;i++)
+                for (var i = 0; i < Frames.Count; i++)
                 {
                     var frame = Frames[i];
                     writer.Write((int)frame.Group);
@@ -207,13 +209,13 @@ namespace GoldSrc.Sprite
         /// <returns>256 color Bitmap</returns>
         public Bitmap GetBitmap()
         {
-            Bitmap bmp = new Bitmap(this.Width, this.Height,PixelFormat.Format8bppIndexed);
+            Bitmap bmp = new Bitmap(this.Width, this.Height, PixelFormat.Format8bppIndexed);
 
             // Copy the palette
             var palette = bmp.Palette;
             sprite.Palette.CopyTo(palette.Entries, 0);
             bmp.Palette = palette;
-            
+
 
             // Copy frame data into the bitmap
             var data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, PixelFormat.Format8bppIndexed);
