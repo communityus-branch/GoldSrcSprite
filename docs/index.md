@@ -1,7 +1,12 @@
 # GoldSrcSprite
 GoldsrcSprite is a simple .NET Standard library to handle GoldSrc engine sprite (.spr) files.
 
-## Usage Examples
+## Quickstart
+**Nuget**:  
+[![NuGet](https://img.shields.io/nuget/dt/GoldSrcSprite.svg)](https://www.nuget.org/packages/GoldSrcSprite/)  
+`Install-Package GoldSrcSprite`
+
+## Usage Example
 ```csharp
 // Load sprite
 var sprite = GoldSrcSprite.FromFile("sprite.spr");
@@ -27,7 +32,11 @@ The format itself is flexible, however keep in mind that game engines might not 
 ## More Examples
 
 ### Example #1: Creating a sprite from scratch
-The following example will create a "sprite.spr" file with this sprite: ![Image of Example 1 sprite](https://jpiolho.github.io/GoldSrcSprite//images/example1.png)
+The following example will create a "sprite.spr" file with this sprite:  
+<div style="text-align:center">
+<img alt="Image of Example 1 sprite" src="https://jpiolho.github.io/GoldSrcSprite/images/example1.png" style="border:1px solid black"/>
+</div>
+
 ```csharp
 GoldSrcSprite sprite = new GoldSrcSprite();
 
