@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright />
+    <Authors>JPiolho</Authors>
+    <Company />
+    <Product />
+    <RepositoryUrl>https://github.com/jpiolho/GoldSrcSprite</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/jpiolho/GoldSrcSprite/blob/master/LICENSE</PackageLicenseUrl>
+    <Description>A .NET Standard library for handling GoldSrc engine .spr files</Description>
+    <PackageTags>goldsrc sprite spr</PackageTags>
+    <PackageReleaseNotes>* Initial release</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
