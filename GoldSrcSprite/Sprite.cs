@@ -9,7 +9,13 @@ namespace GoldSrc.Sprite
 {
     public class GoldSrcSprite
     {
+        /// <summary>
+        /// How the sprite orientation should be
+        /// </summary>
         public GoldSrcSpriteType Type { get; set; }
+        /// <summary>
+        /// How the sprite should be rendered
+        /// </summary>
         public GoldSrcSpriteTextureFormat TextureFormat { get; set; }
         public float BoundingRadius { get; set; }
         public float BeamLength { get; set; }
@@ -17,6 +23,9 @@ namespace GoldSrc.Sprite
         public Color[] Palette { get; set; }
         public List<GoldSrcSpriteFrame> Frames { get; private set; } = new List<GoldSrcSpriteFrame>();
         
+        /// <summary>
+        /// Gets the width of the largest frame in this sprite
+        /// </summary>
         public int MaxWidth {
             get
             {
@@ -28,6 +37,9 @@ namespace GoldSrc.Sprite
             }
         }
 
+        /// <summary>
+        /// Gets the height of the largest frame in this sprite
+        /// </summary>
         public int MaxHeight
         {
             get
@@ -41,13 +53,22 @@ namespace GoldSrc.Sprite
             }
         }
 
-
+        /// <summary>
+        /// Loads a sprite from a file
+        /// </summary>
+        /// <param name="path">Sprite file path</param>
+        /// <returns>Sprite</returns>
         public static GoldSrcSprite FromFile(string path)
         {
             using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
                 return FromStream(fs);
         }
 
+        /// <summary>
+        /// Loads a sprite from a stream
+        /// </summary>
+        /// <param name="stream">Sprite stream</param>
+        /// <returns>Sprite</returns>
         public static GoldSrcSprite FromStream(Stream stream)
         {
             var sprite = new GoldSrcSprite();
@@ -99,17 +120,28 @@ namespace GoldSrc.Sprite
             return sprite;
         }
 
+        /// <summary>
+        /// Recalculates the sprite BoundingRadius property. This should be called before saving a sprite if new frames with different sizes have been added.
+        /// </summary>
         public void RecalculateBoundingRadius()
         {
             BoundingRadius = (float)Math.Sqrt((MaxWidth >> 1) * (MaxWidth >> 1) + (MaxHeight >> 1) * (MaxHeight >> 1));
         }
 
+        /// <summary>
+        /// Saves the sprite to a .spr file
+        /// </summary>
+        /// <param name="path">Target path</param>
         public void SaveToFile(string path)
         {
             using (FileStream fs = new FileStream(path, File.Exists(path) ? FileMode.Truncate : FileMode.OpenOrCreate, FileAccess.Write))
                 SaveToStream(fs);
         }
 
+        /// <summary>
+        /// Saves the sprite to a stream
+        /// </summary>
+        /// <param name="stream"></param>
         public void SaveToStream(Stream stream)
         {
             using (BinaryWriter writer = new BinaryWriter(stream))
@@ -164,9 +196,15 @@ namespace GoldSrc.Sprite
         public int Width { get; set; }
         public int Height { get; set; }
 
+        /// <summary>
+        /// Image data of this frame. Each byte represents an index to the sprite palettes.
+        /// </summary>
         public byte[] Data { get; set; }
 
-
+        /// <summary>
+        /// Gets a 256 color Bitmap from this frame using the sprite palette
+        /// </summary>
+        /// <returns>256 color Bitmap</returns>
         public Bitmap GetBitmap()
         {
             Bitmap bmp = new Bitmap(this.Width, this.Height,PixelFormat.Format8bppIndexed);
