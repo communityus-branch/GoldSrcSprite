@@ -23,3 +23,44 @@ The format itself is flexible, however keep in mind that game engines might not 
 * Each sprite can contain multiple frames
 * Each frame share the same palette
 * Each frame can be different sizes and have a different center origin point
+
+## More Examples
+
+### Example #1: Creating a sprite from scratch
+The following example will create a "sprite.spr" file with this sprite: ![Image of Example 1 sprite](https://jpiolho.github.io/GoldSrcSprite//images/example1.png)
+```csharp
+GoldSrcSprite sprite = new GoldSrcSprite();
+
+// Set some basic settings
+sprite.Type = GoldSrcSpriteType.ParallelUpright;
+sprite.TextureFormat = GoldSrcSpriteTextureFormat.Normal;
+sprite.Synchronization = GoldSrcSpriteSynchronization.Synchronized;
+
+// Create the palette
+sprite.Palette = new Color[256];
+sprite.Palette[0] = Color.Red;
+sprite.Palette[1] = Color.Green;
+sprite.Palette[2] = Color.Blue;
+sprite.Palette[3] = Color.White;
+
+// Create the frame
+var frame = new GoldSrcSpriteFrame(sprite,2,2);
+
+// Frame basic settings
+frame.OriginX = 1;
+frame.OriginY = 1;
+
+// Actual image data
+new byte[]
+{
+0,1,
+2,3
+}.CopyTo(frame.Data, 0);
+
+// Add the frame to the sprite
+sprite.Frames.Add(frame);
+
+// Save the sprite
+sprite.SaveToFile("sprite.spr");
+```
+
