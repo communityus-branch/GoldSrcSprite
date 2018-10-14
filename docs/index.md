@@ -69,6 +69,9 @@ new byte[]
 // Add the frame to the sprite
 sprite.Frames.Add(frame);
 
+// Recalculate bounding radius. Should call when changing frames sizes
+sprite.RecalculateBoundingRadius();
+
 // Save the sprite
 sprite.SaveToFile("sprite.spr");
 ```
