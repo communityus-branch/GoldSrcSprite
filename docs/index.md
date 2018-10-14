@@ -14,7 +14,7 @@ var sprite = GoldSrcSprite.FromFile("sprite.spr");
 // Get bitmap of the first frame
 using(var bmp = sprite.Frames[0].GetBitmap()) {
 	// Save as bmp
-    bmp.Save("sprite.bmp");
+	bmp.Save("sprite.bmp");
 }
 
 // Save sprite
@@ -28,6 +28,8 @@ The format itself is flexible, however keep in mind that game engines might not 
 * Each sprite can contain multiple frames
 * Each frame share the same palette
 * Each frame can be different sizes and have a different center origin point
+
+See [Sprite File Format](fileformat.md)
 
 ## More Examples
 
