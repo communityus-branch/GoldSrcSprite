@@ -76,7 +76,7 @@ sprite.SaveToFile("sprite.spr");
 ### Example #2: Creating a sprite from a bitmap
 The following example will create a "sprite.spr" file from the following image. **Note:** The bitmap is in 256 color mode. This example will not work with any other modes.
 <div style="text-align:center">
-<img alt="Image of Example 2 sprite" src="https://jpiolho.github.io/GoldSrcSprite/images/example2.png" style="border:1px solid black"/>
+<img alt="Image of Example 2 sprite" src="https://jpiolho.github.io/GoldSrcSprite/images/example2.bmp" style="border:1px solid black"/>
 </div>
 
 ```csharp
