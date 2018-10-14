@@ -104,14 +104,22 @@ namespace GoldSrc.Sprite
                 // Frames
                 for (var i = 0; i < numberOfFrames; i++)
                 {
-                    var frame = new GoldSrcSpriteFrame(sprite);
+                    var group = (int)reader.ReadInt32();
+                    var originX = reader.ReadInt32();
+                    var originY = reader.ReadInt32();
+                    var width = (int)reader.ReadInt32();
+                    var height = (int)reader.ReadInt32();
+                    var data = reader.ReadBytes(width * height);
 
-                    frame.Group = (int)reader.ReadInt32();
-                    frame.OriginX = reader.ReadInt32();
-                    frame.OriginY = reader.ReadInt32();
-                    frame.Width = (int)reader.ReadInt32();
-                    frame.Height = (int)reader.ReadInt32();
-                    frame.Data = reader.ReadBytes(frame.Width * frame.Height);
+                    var frame = new GoldSrcSpriteFrame(sprite, width, height)
+                    {
+                        Group = group,
+                        OriginX = originX,
+                        OriginY = originY
+                    };
+
+                    // Copy frame data
+                    data.CopyTo(frame.Data, 0);
 
                     sprite.Frames.Add(frame);
                 }
@@ -187,21 +195,25 @@ namespace GoldSrc.Sprite
     {
         private GoldSrcSprite sprite;
 
-        public GoldSrcSpriteFrame(GoldSrcSprite sprite)
+        public GoldSrcSpriteFrame(GoldSrcSprite sprite,int width,int height)
         {
             this.sprite = sprite;
+
+            this.Data = new byte[width * height];
+            this.Width = width;
+            this.Height = height;
         }
 
         public int Group { get; set; }
         public int OriginX { get; set; }
         public int OriginY { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
 
         /// <summary>
         /// Image data of this frame. Each byte represents an index to the sprite palettes.
         /// </summary>
-        public byte[] Data { get; set; }
+        public byte[] Data { get; private set; }
 
         /// <summary>
         /// Gets a 256 color Bitmap from this frame using the sprite palette
@@ -221,8 +233,23 @@ namespace GoldSrc.Sprite
             var data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, PixelFormat.Format8bppIndexed);
 
             var ptr = data.Scan0;
-            var bytes = Math.Abs(data.Stride) * bmp.Height;
-            Marshal.Copy(this.Data, 0, ptr, bytes);
+            var idx = 0;
+
+            if (data.Stride != bmp.Width)
+            {
+                // Copy line by line, because of stride padding
+                for (var i = 0; i < bmp.Height; i++)
+                {
+                    Marshal.Copy(this.Data, idx, ptr, bmp.Width);
+                    ptr += Math.Abs(data.Stride);
+                    idx += bmp.Width;
+                }
+            }
+            else
+            {
+                // Just do a faster direct copying
+                Marshal.Copy(this.Data, 0, ptr, this.Data.Length);
+            }
 
             bmp.UnlockBits(data);
 
